@@ -37,20 +37,18 @@ const displayUserEntries = () => {
     details.innerHTML = table;
 }
 
-function validateDob(element) {
-    const dobValue = element.value;
-    const toDate = new Date();
-    const dobDate = new Date(dobValue);
-    const age = toDate.getFullYear() - dobDate.getFullYear();
-    const ageDiff = age < 18 || age>55; 
 
-    if (ageDiff) {
-        element.setCustomValidity("Age must be between 18 and 55 years!");
-        element.reportValidity();
-    } else {
-        element.setCustomValidity('');
-    }
-}
+
+const curr_date = new Date();
+const to_date = curr_date.getDate();
+const to_month = curr_date.getMonth() + 1;
+const to_year = curr_date.getFullYear();
+const pz = (intval) => (intval < 10 ? "0" + intval : intval);
+const mini = `${to_year- 55}-${pz(to_month)}-${pz(to_date)}`;
+const maxi= `${to_year - 18}-${pz(to_month)}-${pz(to_date)}`;
+document.getElementById("dob").setAttribute("min", mini);
+document.getElementById("dob").setAttribute("max", maxi);
+
 
 const saveUserInput = (event) => {
     event.preventDefault();
@@ -59,7 +57,7 @@ const saveUserInput = (event) => {
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
     const dobInput = document.getElementById("dob");
-    validateDob(dobInput);
+    //validateDob(dobInput);
     if (form.checkValidity()) {
         const name = nameInput.value;
         const email = emailInput.value;
@@ -83,4 +81,3 @@ const saveUserInput = (event) => {
 
 document.getElementById("user-input").addEventListener("submit", saveUserInput);
 displayUserEntries();
-//localStorage.clear()
