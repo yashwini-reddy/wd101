@@ -42,9 +42,9 @@ function validateDob(element) {
     const toDate = new Date();
     const dobDate = new Date(dobValue);
     const age = toDate.getFullYear() - dobDate.getFullYear();
-    const ageDiff = age >= 18 && age <= 55;
+    const ageDiff = age < 18 || age>55; 
 
-    if (!ageDiff) {
+    if (ageDiff) {
         element.setCustomValidity("Age must be between 18 and 55 years!");
         element.reportValidity();
     } else {
